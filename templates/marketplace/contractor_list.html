@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contractors — ContractorBoard{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="py-5 bg-image overlay-primary fixed overlay"
+  style="background-image: url('{% static 'images/hero_1.jpg' %}');">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-white">
+        <h2 class="mb-0">Browse Contractors</h2>
+        <p class="mb-0">Find verified HVAC, Plumbing, Roofing and Electrical contractors</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="site-section">
+  <div class="container">
+
+    <!-- Filters -->
+    <form method="GET" action="{% url 'contractor_list' %}" class="mb-5">
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <select name="niche" class="form-control">
+            <option value="">All Niches</option>
+            <option value="HVAC" {% if niche == 'HVAC' %}selected{% endif %}>HVAC</option>
+            <option value="Plumbing" {% if niche == 'Plumbing' %}selected{% endif %}>Plumbing</option>
+            <option value="Roofing" {% if niche == 'Roofing' %}selected{% endif %}>Roofing</option>
+            <option value="Electrical" {% if niche == 'Electrical' %}selected{% endif %}>Electrical</option>
+          </select>
+        </div>
+        <div class="col-md-4 mb-3">
+          <input type="text" name="location" value="{{ location }}"
+            class="form-control" placeholder="Service area...">
+        </div>
+        <div class="col-md-2 mb-3">
+          <button type="submit" class="btn btn-primary btn-block">Filter</button>
+        </div>
+        <div class="col-md-2 mb-3">
+          <a href="{% url 'contractor_list' %}" class="btn btn-outline-secondary btn-block">Clear</a>
+        </div>
+      </div>
+    </form>
+
+    <!-- Contractor Cards -->
+    <div class="row">
+      {% for profile in profiles %}
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-body p-4 text-center">
+
+            <!-- Photo -->
+            {% if profile.photo %}
+            <img src="{{ profile.photo.url }}" alt="{{ profile.business_name }}"
+              class="rounded-circle mb-3" width="80" height="80"
+              style="object-fit:cover;">
+            {% else %}
+            <div class="rounded-circle bg-primary d-inline-flex align-items-center 
+              justify-content-center mb-3"
+              style="width:80px;height:80px;">
+              <span class="text-white h3 mb-0">
+                {{ profile.business_name|first|upper }}
+              </span>
+            </div>
+            {% endif %}
+
+            <!-- Name & Verified -->
+            <h5 class="mb-1">
+              {{ profile.business_name }}
+              {% if profile.is_verified %}
+              <span class="badge badge-success ml-1">✓ Verified</span>
+              {% endif %}
+            </h5>
+
+            <!-- Niche & Location -->
+            <p class="text-muted mb-2">
+              <span class="badge badge-primary">{{ profile.niche }}</span>
+            </p>
+            <p class="text-muted mb-2">📍 {{ profile.service_area }}</p>
+
+            <!-- Rating -->
+            {% if profile.avg_rating %}
+            <p class="mb-3">
+              ⭐ {{ profile.avg_rating|floatformat:1 }} / 5.0
+            </p>
+            {% else %}
+            <p class="text-muted mb-3">No reviews yet</p>
+            {% endif %}
+
+            <a href="{% url 'contractor_detail' profile.pk %}"
+              class="btn btn-outline-primary btn-block">View Profile</a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center py-5">
+        <h4 class="text-muted">No contractors found.</h4>
+        <a href="{% url 'contractor_list' %}" class="btn btn-primary mt-3">Clear Filters</a>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ job.title }} — ContractorBoard{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="py-5 bg-image overlay-primary fixed overlay"
+  style="background-image: url('{% static 'images/hero_1.jpg' %}');">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-white">
+        <span class="badge badge-primary mb-2">{{ job.niche }}</span>
+        <h2 class="mb-0">{{ job.title }}</h2>
+        <p class="mb-0">📍 {{ job.location }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="site-section">
+  <div class="container">
+    <div class="row">
+
+      <!-- Job Details -->
+      <div class="col-md-8">
+        <div class="card shadow-sm mb-4">
+          <div class="card-body p-4">
+            <h5 class="mb-3">Job Description</h5>
+            <p>{{ job.description }}</p>
+            <hr>
+            <div class="row">
+              <div class="col-md-4">
+                <small class="text-muted d-block">Niche</small>
+                <strong>{{ job.niche }}</strong>
+              </div>
+              <div class="col-md-4">
+                <small class="text-muted d-block">Location</small>
+                <strong>{{ job.location }}</strong>
+              </div>
+              <div class="col-md-4">
+                <small class="text-muted d-block">Budget</small>
+                <strong>${{ job.budget_min }} — ${{ job.budget_max }}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Owner Actions -->
+        {% if user == job.homeowner %}
+        <a href="{% url 'job_edit' job.pk %}" 
+          class="btn btn-outline-secondary mr-2">Edit Job</a>
+        <a href="{% url 'job_delete' job.pk %}" 
+          class="btn btn-outline-danger">Delete Job</a>
+        {% endif %}
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
+          <div class="card-body p-4 text-center">
+            <h5 class="mb-3">Interested in this job?</h5>
+
+            {% if user.is_authenticated %}
+              {% if user.is_contractor %}
+                <a href="{% url 'send_inquiry' job.pk %}" 
+                  class="btn btn-primary btn-block mb-2">
+                  Send Inquiry
+                </a>
+              {% elif user == job.homeowner %}
+                <p class="text-muted">This is your job posting.</p>
+              {% else %}
+                <p class="text-muted">Only contractors can send inquiries.</p>
+              {% endif %}
+            {% else %}
+              <p class="text-muted mb-3">Login as a contractor to apply.</p>
+              <a href="{% url 'login' %}" 
+                class="btn btn-primary btn-block">Login to Apply</a>
+            {% endif %}
+
+            <a href="{% url 'job_list' %}" 
+              class="btn btn-outline-secondary btn-block mt-2">
+              ← Back to Jobs
+            </a>
+          </div>
+        </div>
+
+        <!-- Job Meta -->
+        <div class="card shadow-sm">
+          <div class="card-body p-4">
+            <small class="text-muted d-block mb-1">Posted by</small>
+            <strong>{{ job.homeowner.username }}</strong>
+            <small class="text-muted d-block mt-2 mb-1">Posted on</small>
+            <strong>{{ job.created_at|date:"M d, Y" }}</strong>
+            <small class="text-muted d-block mt-2 mb-1">Status</small>
+            <span class="badge badge-success">{{ job.status|capfirst }}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

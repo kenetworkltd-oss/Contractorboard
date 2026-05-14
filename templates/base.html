@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}ContractorBoard{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/custom-bs.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body id="top">
+
+<div class="site-wrap">
+
+  <!-- NAVBAR -->
+  <header class="site-navbar mt-3">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="site-logo col-6">
+          <a href="/">ContractorBoard</a>
+        </div>
+        <div class="right-cta-menu text-right col-6">
+          <div class="ml-auto">
+            {% if user.is_authenticated %}
+              <a href="/dashboard/" class="btn btn-outline-primary mr-2">Dashboard</a>
+              <a href="/accounts/logout/" class="btn btn-primary">Logout</a>
+            {% else %}
+              <a href="/accounts/login/" class="btn btn-outline-primary mr-2">Log In</a>
+              <a href="/accounts/register/contractor/" class="btn btn-primary">Register</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Messages -->
+  {% if messages %}
+  <div class="container mt-3">
+    {% for message in messages %}
+    <div class="alert alert-info">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Page Content -->
+  {% block content %}{% endblock %}
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="row pt-5 mt-5 text-center">
+        <div class="col-md-12">
+          <p>ContractorBoard &copy; 2026 — Built with Django by Kenny | FlyVark AI</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+
+</body>
+</html>

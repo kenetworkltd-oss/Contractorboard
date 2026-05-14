@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Login — ContractorBoard{% endblock %}
+
+{% block content %}
+
+<section class="site-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <div class="card shadow-sm">
+          <div class="card-body p-5">
+            <h3 class="mb-4 text-center">Login</h3>
+            <form method="POST">
+              {% csrf_token %}
+              {% for field in form %}
+              <div class="form-group">
+                <label>{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <small class="text-danger">{{ field.errors }}</small>
+                {% endif %}
+              </div>
+              {% endfor %}
+              <button type="submit" class="btn btn-primary btn-block btn-lg">Login</button>
+            </form>
+            <hr>
+            <p class="text-center mb-0">
+              Don't have an account? 
+              <a href="/accounts/register/homeowner/">Register as Homeowner</a> or 
+              <a href="/accounts/register/contractor/">Register as Contractor</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

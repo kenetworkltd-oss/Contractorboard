@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Browse Jobs — ContractorBoard{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="py-5 bg-image overlay-primary fixed overlay" 
+  style="background-image: url('{% static 'images/hero_1.jpg' %}');">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 text-white">
+        <h2 class="mb-0">Browse Jobs</h2>
+        <p class="mb-0">{{ total_results }} job(s) found</p>
+      </div>
+      {% if user.is_authenticated and user.is_homeowner %}
+      <div class="col-md-4 text-right">
+        <a href="{% url 'job_create' %}" class="btn btn-white">+ Post a Job</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Search & Results -->
+<section class="site-section">
+  <div class="container">
+
+    <!-- Search Bar -->
+    <form method="GET" action="{% url 'job_list' %}" class="mb-5">
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <input type="text" name="q" value="{{ keyword }}" 
+            class="form-control" placeholder="Search jobs...">
+        </div>
+        <div class="col-md-3 mb-3">
+          <select name="niche" class="form-control">
+            <option value="">All Niches</option>
+            <option value="HVAC" {% if niche == 'HVAC' %}selected{% endif %}>HVAC</option>
+            <option value="Plumbing" {% if niche == 'Plumbing' %}selected{% endif %}>Plumbing</option>
+            <option value="Roofing" {% if niche == 'Roofing' %}selected{% endif %}>Roofing</option>
+            <option value="Electrical" {% if niche == 'Electrical' %}selected{% endif %}>Electrical</option>
+          </select>
+        </div>
+        <div class="col-md-3 mb-3">
+          <input type="text" name="location" value="{{ location }}" 
+            class="form-control" placeholder="Location...">
+        </div>
+        <div class="col-md-2 mb-3">
+          <button type="submit" class="btn btn-primary btn-block">Search</button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Job Cards -->
+    {% for job in page_obj %}
+    <div class="card mb-4 shadow-sm">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-md-8">
+            <span class="badge badge-primary mb-2">{{ job.niche }}</span>
+            <h5 class="mb-1">
+              <a href="{% url 'job_detail' job.pk %}">{{ job.title }}</a>
+            </h5>
+            <p class="text-muted mb-0">
+              <span class="mr-3">📍 {{ job.location }}</span>
+              <span>💰 ${{ job.budget_min }} — ${{ job.budget_max }}</span>
+            </p>
+          </div>
+          <div class="col-md-4 text-right">
+            <small class="text-muted d-block mb-2">{{ job.created_at|date:"M d, Y" }}</small>
+            <a href="{% url 'job_detail' job.pk %}" class="btn btn-outline-primary btn-sm">View Job</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="text-center py-5">
+      <h4 class="text-muted">No jobs found matching your search.</h4>
+      <a href="{% url 'job_list' %}" class="btn btn-primary mt-3">Clear Filters</a>
+    </div>
+    {% endfor %}
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+    <nav class="mt-4">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ keyword }}&niche={{ niche }}&location={{ location }}">Previous</a>
+        </li>
+        {% endif %}
+        <li class="page-item disabled">
+          <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        </li>
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ keyword }}&niche={{ niche }}&location={{ location }}">Next</a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+
+  </div>
+</section>
+
+{% endblock %}

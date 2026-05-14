@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ContractorBoard — Find Local Contractors{% endblock %}
+
+{% block content %}
+
+<!-- Preloader -->
+<div id="overlayer"></div>
+<div class="loader">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<!-- HERO SECTION -->
+<section class="home-section section-hero overlay bg-image" 
+  style="background-image: url('{% static 'images/hero_1.jpg' %}');" id="home-section">
+  <div class="container">
+    <div class="row align-items-center justify-content-center">
+      <div class="col-md-12">
+        <div class="mb-5 text-center">
+          <h1 class="text-white font-weight-bold">Find Trusted Local Contractors</h1>
+          <p class="text-white">Connect with verified HVAC, Plumbing, Roofing and Electrical contractors in your area.</p>
+        </div>
+
+        <!-- SEARCH FORM -->
+        <form method="GET" action="/jobs/" class="search-jobs-form">
+          <div class="row mb-5">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0">
+              <input type="text" name="q" class="form-control form-control-lg" placeholder="Search jobs...">
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0">
+              <select name="niche" class="selectpicker" data-style="btn-white btn-lg" data-width="100%" title="Select Niche">
+                <option value="">All Niches</option>
+                <option value="HVAC">HVAC</option>
+                <option value="Plumbing">Plumbing</option>
+                <option value="Roofing">Roofing</option>
+                <option value="Electrical">Electrical</option>
+              </select>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0">
+              <button type="submit" class="btn btn-primary btn-lg btn-block text-white btn-search">
+                <span class="icon-search icon mr-2"></span>Search Jobs
+              </button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS SECTION -->
+<section class="py-5 bg-image overlay-primary fixed overlay" 
+  style="background-image: url('{% static 'images/hero_1.jpg' %}');">
+  <div class="container">
+    <div class="row mb-5 justify-content-center">
+      <div class="col-md-7 text-center">
+        <h2 class="section-title mb-2 text-white">ContractorBoard Stats</h2>
+        <p class="lead text-white">Connecting homeowners with trusted contractors across the US.</p>
+      </div>
+    </div>
+    <div class="row pb-0 block__19738 section-counter">
+      <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+        <div class="d-flex align-items-center justify-content-center mb-2">
+          <strong class="number" data-number="500">0</strong>
+        </div>
+        <span class="caption">Homeowners</span>
+      </div>
+      <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+        <div class="d-flex align-items-center justify-content-center mb-2">
+          <strong class="number" data-number="120">0</strong>
+        </div>
+        <span class="caption">Jobs Posted</span>
+      </div>
+      <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+        <div class="d-flex align-items-center justify-content-center mb-2">
+          <strong class="number" data-number="80">0</strong>
+        </div>
+        <span class="caption">Jobs Filled</span>
+      </div>
+      <div class="col-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+        <div class="d-flex align-items-center justify-content-center mb-2">
+          <strong class="number" data-number="200">0</strong>
+        </div>
+        <span class="caption">Contractors</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NICHES SECTION -->
+<section class="site-section">
+  <div class="container">
+    <div class="row mb-5 justify-content-center">
+      <div class="col-md-7 text-center">
+        <h2 class="section-title mb-2">Browse By Niche</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 mb-4">
+        <a href="/jobs/?niche=HVAC" class="btn btn-outline-primary btn-lg btn-block">
+          <span class="icon-ac_unit mr-2"></span>HVAC
+        </a>
+      </div>
+      <div class="col-md-3 mb-4">
+        <a href="/jobs/?niche=Plumbing" class="btn btn-outline-primary btn-lg btn-block">
+          <span class="icon-opacity mr-2"></span>Plumbing
+        </a>
+      </div>
+      <div class="col-md-3 mb-4">
+        <a href="/jobs/?niche=Roofing" class="btn btn-outline-primary btn-lg btn-block">
+          <span class="icon-home mr-2"></span>Roofing
+        </a>
+      </div>
+      <div class="col-md-3 mb-4">
+        <a href="/jobs/?niche=Electrical" class="btn btn-outline-primary btn-lg btn-block">
+          <span class="icon-flash_on mr-2"></span>Electrical
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="py-5 bg-primary">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-8 text-white">
+        <h2 class="mb-0">Are you a Contractor?</h2>
+        <p class="mb-0">Register today and start receiving job leads in your area.</p>
+      </div>
+      <div class="col-md-4 text-right">
+        <a href="/accounts/register/contractor/" class="btn btn-white btn-lg">Register as Contractor</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

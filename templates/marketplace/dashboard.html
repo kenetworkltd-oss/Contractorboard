@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard — ContractorBoard{% endblock %}
+
+{% block content %}
+<section class="site-section">
+  <div class="container">
+
+    <div class="row mb-5">
+      <div class="col-md-12">
+        <h2 class="mb-0">Welcome, {{ user.username }}! 👋</h2>
+        <p class="text-muted">Logged in as <strong>{{ user.user_type|capfirst }}</strong></p>
+      </div>
+    </div>
+
+    {% if user.is_homeowner %}
+    <!-- Homeowner Dashboard -->
+    <div class="row mb-5">
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-sm text-center p-4">
+          <h4>Post a Job</h4>
+          <p>Find contractors for your projects</p>
+          <a href="/jobs/create/" class="btn btn-primary">Post a Job</a>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-sm text-center p-4">
+          <h4>Browse Contractors</h4>
+          <p>Find verified contractors near you</p>
+          <a href="/contractors/" class="btn btn-outline-primary">Browse</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- My Jobs -->
+    <h4 class="mb-3">My Job Postings</h4>
+    {% if my_jobs %}
+    <div class="table-responsive mb-5">
+      <table class="table table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th>Title</th>
+            <th>Niche</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for job in my_jobs %}
+          <tr>
+            <td><a href="/jobs/{{ job.pk }}/">{{ job.title }}</a></td>
+            <td>{{ job.niche }}</td>
+            <td>{{ job.location }}</td>
+            <td><span class="badge badge-success">{{ job.status }}</span></td>
+            <td>
+              <a href="/jobs/{{ job.pk }}/edit/" class="btn btn-sm btn-outline-secondary">Edit</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="text-muted">No jobs posted yet. <a href="/jobs/create/">Post your first job</a></p>
+    {% endif %}
+
+    <!-- Inquiries Received -->
+    <h4 class="mb-3">Inquiries Received</h4>
+    {% if inquiries_received %}
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th>Job</th>
+            <th>Contractor</th>
+            <th>Message</th>
+            <th>Status</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for inquiry in inquiries_received %}
+          <tr>
+            <td>{{ inquiry.job.title }}</td>
+            <td>{{ inquiry.contractor.username }}</td>
+            <td>{{ inquiry.message|truncatewords:10 }}</td>
+            <td><span class="badge badge-info">{{ inquiry.status }}</span></td>
+            <td>{{ inquiry.sent_at|date:"M d, Y" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="text-muted">No inquiries received yet.</p>
+    {% endif %}
+
+    {% endif %}
+
+    {% if user.is_contractor %}
+    <!-- Contractor Dashboard -->
+    <div class="row mb-5">
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-sm text-center p-4">
+          <h4>Browse Jobs</h4>
+          <p>Find jobs matching your skills</p>
+          <a href="/jobs/" class="btn btn-primary">Browse Jobs</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- My Inquiries -->
+    <h4 class="mb-3">My Sent Inquiries</h4>
+    {% if inquiries %}
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th>Job</th>
+            <th>Location</th>
+            <th>Message</th>
+            <th>Status</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for inquiry in inquiries %}
+          <tr>
+            <td><a href="/jobs/{{ inquiry.job.pk }}/">{{ inquiry.job.title }}</a></td>
+            <td>{{ inquiry.job.location }}</td>
+            <td>{{ inquiry.message|truncatewords:10 }}</td>
+            <td><span class="badge badge-info">{{ inquiry.status }}</span></td>
+            <td>{{ inquiry.sent_at|date:"M d, Y" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="text-muted">No inquiries sent yet. <a href="/jobs/">Browse jobs</a></p>
+    {% endif %}
+    {% endif %}
+
+  </div>
+</section>
+{% endblock %}
