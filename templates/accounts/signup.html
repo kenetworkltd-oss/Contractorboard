@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+
+{% block title %}Register — ContractorBoard{% endblock %}
+
+{% block content %}
+<section class="site-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow-sm">
+          <div class="card-body p-5">
+            <h3 class="mb-4 text-center">Create Account</h3>
+
+            <!-- Google Signup -->
+            <a href="{% provider_login_url 'google' %}"
+              class="btn btn-outline-danger btn-block btn-lg mb-4">
+              <img src="https://www.google.com/favicon.ico"
+                width="20" class="mr-2">
+              Sign up with Google
+            </a>
+
+            <div class="text-center text-muted mb-4">— or register manually —</div>
+
+            <!-- User Type Selection -->
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <a href="{% url 'register_contractor' %}"
+                  class="btn btn-outline-primary btn-block">
+                  I'm a Contractor
+                </a>
+              </div>
+              <div class="col-md-6">
+                <a href="{% url 'register_homeowner' %}"
+                  class="btn btn-outline-primary btn-block">
+                  I'm a Homeowner
+                </a>
+              </div>
+            </div>
+
+            <form method="POST" action="{% url 'account_signup' %}">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit" class="btn btn-primary btn-block btn-lg">
+                Register
+              </button>
+            </form>
+            <hr>
+            <p class="text-center mb-0">
+              Already have an account?
+              <a href="{% url 'account_login' %}">Login</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
+{% load socialaccount %}
 
 {% block title %}Login — ContractorBoard{% endblock %}
 
 {% block content %}
-
 <section class="site-section">
   <div class="container">
     <div class="row justify-content-center">
@@ -11,24 +11,28 @@
         <div class="card shadow-sm">
           <div class="card-body p-5">
             <h3 class="mb-4 text-center">Login</h3>
-            <form method="POST">
+
+            <!-- Google Login Button -->
+            <a href="{% provider_login_url 'google' %}"
+              class="btn btn-outline-danger btn-block btn-lg mb-4">
+              <img src="https://www.google.com/favicon.ico"
+                width="20" class="mr-2">
+              Continue with Google
+            </a>
+
+            <div class="text-center text-muted mb-4">— or login with username —</div>
+
+            <form method="POST" action="{% url 'account_login' %}">
               {% csrf_token %}
-              {% for field in form %}
-              <div class="form-group">
-                <label>{{ field.label }}</label>
-                {{ field }}
-                {% if field.errors %}
-                <small class="text-danger">{{ field.errors }}</small>
-                {% endif %}
-              </div>
-              {% endfor %}
-              <button type="submit" class="btn btn-primary btn-block btn-lg">Login</button>
+              {{ form.as_p }}
+              <button type="submit" class="btn btn-primary btn-block btn-lg">
+                Login
+              </button>
             </form>
             <hr>
             <p class="text-center mb-0">
-              Don't have an account? 
-              <a href="/accounts/register/homeowner/">Register as Homeowner</a> or 
-              <a href="/accounts/register/contractor/">Register as Contractor</a>
+              Don't have an account?
+              <a href="{% url 'account_signup' %}">Register</a>
             </p>
           </div>
         </div>
@@ -36,5 +40,4 @@
     </div>
   </div>
 </section>
-
 {% endblock %}

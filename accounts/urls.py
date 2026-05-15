@@ -9,3 +9,4 @@ urlpatterns = [
     path('register/contractor/', views.register_contractor, name='register_contractor'),
     path('register/homeowner/', views.register_homeowner, name='register_homeowner'),
 ]
+
