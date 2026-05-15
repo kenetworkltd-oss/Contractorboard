@@ -136,16 +136,43 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
+import os
+
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = "static/"
 
+# Where Django looks for static files in your project
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
+# The directory where Railway will collect all files for deployment
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# WhiteNoise storage for caching and compression
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Auth Redirects
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/accounts/login/'
 
+# STATIC_URL = "static/"
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# LOGIN_REDIRECT_URL = '/dashboard/'
+# LOGOUT_REDIRECT_URL = '/'
+# LOGIN_URL = '/accounts/login/'
+
+
+# STATIC_ROOT = BASE_DIR / 'staticfiles'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATIC_ROOT = BASE_DIR / 'staticfiles'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# import os
+
+# # The directory where collectstatic will collect all files for deployment
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# # This tells WhiteNoise to use storage with caching and compression
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
