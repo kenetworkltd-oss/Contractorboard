@@ -1,1 +1,1 @@
-web: gunicorn jobboard.wsgi
+web: gunicorn jobboard.wsgi --bind 0.0.0.0:$PORT
