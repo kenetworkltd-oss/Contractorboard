@@ -1,62 +1,52 @@
-# ContractorBoard — Django Job Board & Lead Marketplace
+# Jobboard — Django Job Board & Lead Marketplace
 
-A full-stack two-sided marketplace connecting homeowners with verified 
-HVAC, Plumbing, Roofing, and Electrical contractors.
+A full-stack marketplace connecting homeowners with verified HVAC, Plumbing, Roofing, and Electrical contractors.
 
-## 🌐 Live Demo
-[Coming soon after deployment]
+## Live Demo
+https://web-production-e20f4.up.railway.app
 
----
-
-## 📌 What It Does
-
-ContractorBoard allows homeowners to post jobs and contractors to browse, 
-filter, and send inquiries. Both sides get dedicated dashboards to manage 
-their activity.
-
-**Homeowners can:**
-- Post jobs with budget, location, and niche
-- Receive inquiries from contractors
-- Browse and review verified contractors
-
-**Contractors can:**
-- Browse and search open jobs
-- Filter by niche, location, and budget
-- Send inquiries directly to homeowners
-- Build a public profile with reviews and ratings
+## GitHub
+https://github.com/kenetworkltd-oss/Contractorboard
 
 ---
 
-## ✨ Key Features
+## What It Does
+
+Homeowners post jobs, contractors browse and send inquiries. Both get dedicated dashboards.
+
+Homeowners can post jobs, receive inquiries, and review contractors.
+Contractors can browse jobs, filter by niche and location, send inquiries, and build a public profile.
+
+---
+
+## Key Features
 
 - Custom User Model with Contractor and Homeowner roles
-- Full-text job search using Django Q objects
-- Multi-field filters — niche, location, budget
+- Full-text search using Django Q objects
+- Filters by niche, location, budget
 - Pagination on job listings
-- Inquiry system with automated email notifications
-- Contractor profiles with star rating and review system
-- Verified contractor badge (managed via Django Admin)
-- Role-based access control throughout
-- Responsive UI built with Bootstrap 4 (Jobboard template)
-- PostgreSQL database
-- Deployed on Railway
+- Inquiry system with email notifications
+- Contractor profiles with star ratings
+- Verified badge via Django Admin
+- Role-based access control
+- Bootstrap 4 UI
+- PostgreSQL + Railway deployment
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Backend | Django 6.0 |
-| Database | PostgreSQL |
-| Frontend | Bootstrap 4 |
-| Auth | Django Auth + Custom User Model |
-| Email | Gmail SMTP |
-| Static Files | Whitenoise |
-| Deployment | Railway |
+- Backend: Django 6.0
+- Database: PostgreSQL
+- Frontend: Bootstrap 4
+- Static Files: Whitenoise
+- Deployment: Railway
 
 ---
 
-## ⚙️ Local Setup
+## About
 
-**1 — Clone the repo**
+Built by Kenny Agboola — founder of FlyVark AI, AI voice agents for home service contractors. Based in Ibadan, Nigeria.
+
+## License
+MIT
