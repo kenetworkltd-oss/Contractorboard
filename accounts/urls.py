@@ -1,3 +1,4 @@
+
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
@@ -9,4 +10,3 @@ urlpatterns = [
     path('register/contractor/', views.register_contractor, name='register_contractor'),
     path('register/homeowner/', views.register_homeowner, name='register_homeowner'),
 ]
-

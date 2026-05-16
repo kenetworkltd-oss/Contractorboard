@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load socialaccount %}
 
 {% block title %}Login — ContractorBoard{% endblock %}
 
@@ -11,28 +10,19 @@
         <div class="card shadow-sm">
           <div class="card-body p-5">
             <h3 class="mb-4 text-center">Login</h3>
-
-            <!-- Google Login Button -->
-            <a href="{% provider_login_url 'google' %}"
-              class="btn btn-outline-danger btn-block btn-lg mb-4">
-              <img src="https://www.google.com/favicon.ico"
-                width="20" class="mr-2">
-              Continue with Google
-            </a>
-
-            <div class="text-center text-muted mb-4">— or login with username —</div>
-
-            <form method="POST" action="{% url 'account_login' %}">
+            <form method="POST">
               {% csrf_token %}
               {{ form.as_p }}
-              <button type="submit" class="btn btn-primary btn-block btn-lg">
+              <button type="submit" class="btn btn-primary btn-block btn-lg mt-3">
                 Login
               </button>
             </form>
             <hr>
+            <p class="text-center mb-2">
+              <a href="{% url 'register_homeowner' %}">Register as Homeowner</a>
+            </p>
             <p class="text-center mb-0">
-              Don't have an account?
-              <a href="{% url 'account_signup' %}">Register</a>
+              <a href="{% url 'register_contractor' %}">Register as Contractor</a>
             </p>
           </div>
         </div>
