@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %}ContractorBoard{% endblock %}</title>
@@ -17,31 +16,35 @@
 <div class="site-wrap">
 
   <!-- NAVBAR -->
-   {% if user.is_authenticated %}
-  <a href="/dashboard/" class="btn btn-outline-primary mr-2">Dashboard</a>
-  <a href="{% url 'account_logout' %}" class="btn btn-primary">Logout</a>
-{% else %}
-  <a href="{% url 'account_login' %}" class="btn btn-outline-primary mr-2">Log In</a>
-  <a href="{% url 'account_signup' %}" class="btn btn-primary">Register</a>
-{% endif %}
-
   <header class="site-navbar mt-3">
     <div class="container-fluid">
       <div class="row align-items-center">
-        <div class="site-logo col-6">
+
+        <!-- Logo -->
+        <div class="site-logo col-4">
           <a href="/">ContractorBoard</a>
         </div>
-        <div class="right-cta-menu text-right col-6">
-          <div class="ml-auto">
-            {% if user.is_authenticated %}
-              <a href="/dashboard/" class="btn btn-outline-primary mr-2">Dashboard</a>
-              <a href="/accounts/logout/" class="btn btn-primary">Logout</a>
-            {% else %}
-              <a href="/accounts/login/" class="btn btn-outline-primary mr-2">Log In</a>
-              <a href="/accounts/register/contractor/" class="btn btn-primary">Register</a>
-            {% endif %}
-          </div>
+
+        <!-- Nav Links Center -->
+        <nav class="col-4 text-center d-none d-lg-block">
+          <ul class="list-unstyled d-inline-flex mb-0">
+            <li class="mr-3"><a href="/" class="nav-link">Home</a></li>
+            <li class="mr-3"><a href="/jobs/" class="nav-link">Browse Jobs</a></li>
+            <li><a href="/contractors/" class="nav-link">Contractors</a></li>
+          </ul>
+        </nav>
+
+        <!-- Auth Buttons Right -->
+        <div class="col-4 text-right">
+          {% if user.is_authenticated %}
+            <a href="/dashboard/" class="btn btn-outline-primary mr-2">Dashboard</a>
+            <a href="{% url 'account_logout' %}" class="btn btn-primary">Logout</a>
+          {% else %}
+            <a href="{% url 'account_login' %}" class="btn btn-outline-primary mr-2">Login</a>
+            <a href="{% url 'account_signup' %}" class="btn btn-primary">Register</a>
+          {% endif %}
         </div>
+
       </div>
     </div>
   </header>
@@ -50,7 +53,10 @@
   {% if messages %}
   <div class="container mt-3">
     {% for message in messages %}
-    <div class="alert alert-info">{{ message }}</div>
+    <div class="alert alert-info alert-dismissible fade show">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
     {% endfor %}
   </div>
   {% endif %}
@@ -61,6 +67,20 @@
   <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h3 class="footer-heading mb-4">ContractorBoard</h3>
+          <p>Connecting homeowners with trusted HVAC, Plumbing, Roofing and Electrical contractors.</p>
+        </div>
+        <div class="col-md-3 ml-auto">
+          <h3 class="footer-heading mb-4">Quick Links</h3>
+          <ul class="list-unstyled">
+            <li><a href="/jobs/">Browse Jobs</a></li>
+            <li><a href="/contractors/">Contractors</a></li>
+            <li><a href="{% url 'account_login' %}">Login</a></li>
+          </ul>
+        </div>
+      </div>
       <div class="row pt-5 mt-5 text-center">
         <div class="col-md-12">
           <p>ContractorBoard &copy; 2026 — Built with Django by Kenny | FlyVark AI</p>
