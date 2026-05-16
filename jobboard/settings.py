@@ -48,8 +48,6 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "allauth",
     "allauth.account",
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.google",
     'accounts',
     'jobs',
     'marketplace',
@@ -65,27 +63,27 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # Allauth Settings
+
+# Allauth Settings - Updated for new version
 ACCOUNT_LOGIN_METHODS = {'email', 'username'}
-ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
-ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
-ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_UNIQUE_EMAIL = True
 
-# Social Account Settings
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        },
-        'OAUTH_PKCE_ENABLED': True,
-    }
-}
+
+# # Social Account Settings
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         'SCOPE': [
+#             'profile',
+#             'email',
+#         ],
+#         'AUTH_PARAMS': {
+#             'access_type': 'online',
+#         },
+#         'OAUTH_PKCE_ENABLED': True,
+#     }
+# }
 
 SOCIALACCOUNT_AUTO_CONNECT_BY_EMAIL = True
 LOGIN_REDIRECT_URL = '/dashboard/'
@@ -212,25 +210,3 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default auto field
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-# STATIC_URL = "static/"
-
-# STATICFILES_DIRS = [BASE_DIR / 'static']
-
-# LOGIN_REDIRECT_URL = '/dashboard/'
-# LOGOUT_REDIRECT_URL = '/'
-# LOGIN_URL = '/accounts/login/'
-
-
-# STATIC_ROOT = BASE_DIR / 'staticfiles'
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-# STATIC_ROOT = BASE_DIR / 'staticfiles'
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# import os
-
-# # The directory where collectstatic will collect all files for deployment
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# # This tells WhiteNoise to use storage with caching and compression
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

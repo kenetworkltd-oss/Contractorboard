@@ -26,3 +26,5 @@ urlpatterns = [
     path('jobs/', include('jobs.urls')),
     path('', include('marketplace.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
