@@ -1,47 +1,31 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<header class="site-navbar mt-3">
-    <div class="container-fluid">
-      <div class="row align-items-center justify-content-between no-gutters px-3">
-
-        <div class="site-logo col-auto">
-          <a href="/" class="text-white font-weight-bold" style="text-decoration: none; font-size: 1.5rem;">ContractorBoard</a>
-        </div>
-
-        <nav class="site-navigation col-auto d-none d-lg-block">
-          <ul class="site-menu list-unstyled d-flex flex-row align-items-center mb-0">
-            <li class="mx-3"><a href="/" class="nav-link p-0 text-white">Home</a></li>
-            <li class="mx-3"><a href="/jobs/" class="nav-link p-0 text-white">Browse Jobs</a></li>
-            <li class="mx-3"><a href="/contractors/" class="nav-link p-0 text-white">Contractors</a></li>
-          </ul>
-        </nav>
-
-        <div class="col-auto d-flex align-items-center">
-          {% if user.is_authenticated %}
-            <a href="/dashboard/" class="btn btn-outline-white btn-sm mr-2 py-2 px-3">Dashboard</a>
-            <a href="{% url 'account_logout' %}" class="btn btn-primary btn-sm py-2 px-3">Logout</a>
-          {% else %}
-            <a href="{% url 'account_login' %}" class="btn btn-outline-white btn-sm mr-2 py-2 px-3 text-white" style="border: 1px solid rgba(255,255,255,0.3);">Login</a>
-            <a href="{% url 'account_signup' %}" class="btn btn-primary btn-sm py-2 px-3">Register</a>
-          {% endif %}
-        </div>
-
-      </div>
-    </div>
-  </header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}ContractorBoard{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/custom-bs.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
 <body id="top">
 
 <div class="site-wrap">
 
+  <!-- NAVBAR -->
   <header class="site-navbar mt-3">
     <div class="container-fluid">
       <div class="row align-items-center">
 
+        <!-- Logo -->
         <div class="site-logo col-4">
           <a href="/">ContractorBoard</a>
         </div>
 
+        <!-- Nav Links Center -->
         <nav class="col-4 text-center d-none d-lg-block">
           <ul class="list-unstyled d-inline-flex mb-0">
             <li class="mr-3"><a href="/" class="nav-link">Home</a></li>
@@ -50,6 +34,7 @@
           </ul>
         </nav>
 
+        <!-- Auth Buttons Right -->
         <div class="col-4 text-right">
           {% if user.is_authenticated %}
             <a href="/dashboard/" class="btn btn-outline-primary mr-2">Dashboard</a>
@@ -64,6 +49,7 @@
     </div>
   </header>
 
+  <!-- Messages -->
   {% if messages %}
   <div class="container mt-3">
     {% for message in messages %}
@@ -75,8 +61,10 @@
   </div>
   {% endif %}
 
+  <!-- Page Content -->
   {% block content %}{% endblock %}
 
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container">
       <div class="row">
