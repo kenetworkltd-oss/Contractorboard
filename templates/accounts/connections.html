@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Account Connections — Jobboard{% endblock %}
+
+{% block content %}
+<section class="site-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow-sm">
+          <div class="card-body p-5">
+            <h3 class="mb-4">Account Connections</h3>
+            {% if form.accounts %}
+            <h5>Connected Accounts</h5>
+            <form method="POST" action="{% url 'socialaccount_connections' %}">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit" class="btn btn-danger">
+                Remove Connection
+              </button>
+            </form>
+            {% else %}
+            <p class="text-muted">No social accounts connected.</p>
+            {% endif %}
+            <hr>
+            <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-block">
+              Back to Dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
