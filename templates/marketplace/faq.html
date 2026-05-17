@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+
+{% block title %}FAQ — Jobboard{% endblock %}
+
+{% block content %}
+<section class="site-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+
+        <h2 class="mb-5 text-center">Frequently Asked Questions</h2>
+
+        <div id="faqAccordion">
+
+          <!-- For Homeowners -->
+          <h5 class="mb-3 text-primary">For Homeowners</h5>
+
+          <div class="card mb-2">
+            <div class="card-header" id="q1">
+              <button class="btn btn-link btn-block text-left" data-toggle="collapse"
+                data-target="#a1">
+                How do I post a job?
+              </button>
+            </div>
+            <div id="a1" class="collapse" data-parent="#faqAccordion">
+              <div class="card-body">
+                Register as a Homeowner, log in, go to your Dashboard and click
+                "Post a Job". Fill in the title, description, niche, location and budget.
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-2">
+            <div class="card-header" id="q2">
+              <button class="btn btn-link btn-block text-left" data-toggle="collapse"
+                data-target="#a2">
+                How do I receive inquiries from contractors?
+              </button>
+            </div>
+            <div id="a2" class="collapse" data-parent="#faqAccordion">
+              <div class="card-body">
+                Once your job is posted, contractors can send you inquiries.
+                You will receive an email notification and can view all inquiries
+                in your Dashboard.
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-2">
+            <div class="card-header" id="q3">
+              <button class="btn btn-link btn-block text-left" data-toggle="collapse"
+                data-target="#a3">
+                Is it free to post a job?
+              </button>
+            </div>
+            <div id="a3" class="collapse" data-parent="#faqAccordion">
+              <div class="card-body">
+                Yes — posting jobs on Jobboard is completely free for homeowners.
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-header" id="q4">
+              <button class="btn btn-link btn-block text-left" data-toggle="collapse"
+                data-target="#a4">
+                How do I leave a review for a contractor?
+              </button>
+            </div>
+            <div id="a4" class="collapse" data-parent="#faqAccordion">
+              <div class="card-body">
+                Go to the contractor's profile page and scroll down to the reviews
+                section. You can leave a star rating and a comment.
+              </div>
+            </div>
+          </div>
+
+          <!-- For Contractors -->
+          <h5 class="mb-3 text-primary">For Contractors</h5>
+
+          <div class="card mb-2">
+            <div class="card-header" id="q5">
+              <button class="btn btn-link btn-block text-left" data-toggle="collapse"
+                data-target="#a5">
+                How do I register as a contractor?
+              </button>
+            </div>
+            <div id="a5" class="collapse" data-parent="#faqAccordion">
+              <div class="card-body">
+                Click Register on the homepage and select "Register as Contractor".
+                Fill in your business name, niche, and service area.
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-2">
+            <div class="card-header" id="q6">
+              <button class="btn btn-link btn-block text-left" data-toggle="collapse"
+                data-target="#a6">
+                How do I send an inquiry on a job?
+              </button>
+            </div>
+            <div id="a6" class="collapse" data-parent="#faqAccordion">
+              <div class="card-body">
+                Browse jobs at /jobs/, click on any open job, and click
+                "Send Inquiry". Write your message describing your experience,
+                availability and estimated cost.
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-2">
+            <div class="card-header" id="q7">
+              <button class="btn btn-link btn-block text-left" data-toggle="collapse"
+                data-target="#a7">
+                How do I get verified?
+              </button>
+            </div>
+            <div id="a7" class="collapse" data-parent="#faqAccordion">
+              <div class="card-body">
+                Verification is managed by our admin team. Contact us and we will
+                review your profile and grant you a Verified badge.
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-header" id="q8">
+              <button class="btn btn-link btn-block text-left" data-toggle="collapse"
+                data-target="#a8">
+                What niches are supported?
+              </button>
+            </div>
+            <div id="a8" class="collapse" data-parent="#faqAccordion">
+              <div class="card-body">
+                We currently support HVAC, Plumbing, Roofing, and Electrical.
+                More niches will be added soon.
+              </div>
+            </div>
+          </div>
+
+          <!-- General -->
+          <h5 class="mb-3 text-primary">General</h5>
+
+          <div class="card mb-2">
+            <div class="card-header" id="q9">
+              <button class="btn btn-link btn-block text-left" data-toggle="collapse"
+                data-target="#a9">
+                Can I sign in with Google?
+              </button>
+            </div>
+            <div id="a9" class="collapse" data-parent="#faqAccordion">
+              <div class="card-body">
+                Yes — you can sign in or register using your Google account
+                on the login and signup pages.
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-2">
+            <div class="card-header" id="q10">
+              <button class="btn btn-link btn-block text-left" data-toggle="collapse"
+                data-target="#a10">
+                How do I reset my password?
+              </button>
+            </div>
+            <div id="a10" class="collapse" data-parent="#faqAccordion">
+              <div class="card-body">
+                Click "Forgot Password" on the login page. Enter your email
+                and we will send you a reset link.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="text-center mt-5">
+          <p class="text-muted">Still have questions?</p>
+          <a href="mailto:support@jobboard.com" class="btn btn-primary">
+            Contact Us
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

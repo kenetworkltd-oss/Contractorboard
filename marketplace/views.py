@@ -136,3 +136,7 @@ def send_inquiry(request, job_pk):
         'form': form,
         'job': job
     })
+    
+    
+ def faq(request):
+    return render(request, 'marketplace/faq.html')
