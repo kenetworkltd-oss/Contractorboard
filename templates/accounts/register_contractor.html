@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load socialaccount %}
 
 {% block title %}Register as Contractor — ContractorBoard{% endblock %}
 
@@ -10,6 +11,17 @@
         <div class="card shadow-sm">
           <div class="card-body p-5">
             <h3 class="mb-4 text-center">Register as Contractor</h3>
+
+            <!-- Google Signup -->
+            <a href="{% provider_login_url 'google' %}"
+              class="btn btn-outline-danger btn-block btn-lg mb-4">
+              <img src="https://www.google.com/favicon.ico"
+                width="20" class="mr-2">
+              Sign up with Google
+            </a>
+
+            <div class="text-center text-muted mb-4">— or register manually —</div>
+
             <form method="POST">
               {% csrf_token %}
               {% for field in form %}
