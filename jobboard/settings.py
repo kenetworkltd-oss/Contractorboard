@@ -26,6 +26,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
+    # allauth
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    # local apps
     'accounts',
     'jobs',
     'marketplace',
@@ -40,6 +47,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -107,8 +115,48 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+<<<<<<< HEAD
 # Google OAuth Configuration
 GOOGLE_OAUTH_CONFIG = {
     "client_id": config("GOOGLE_OAUTH_KEY", default=""),
     "secret": config("GOOGLE_OAUTH_SECRET", default=""),
+=======
+# django.contrib.sites required by allauth
+SITE_ID = 1
+
+# Authentication backends
+AUTHENTICATION_BACKENDS = [
+    # Default Django backend (username/password)
+    "django.contrib.auth.backends.ModelBackend",
+    # allauth-specific authentication methods (e.g. login by email)
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+# django-allauth core settings
+ACCOUNT_LOGIN_METHODS = {"email"}
+ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+
+# Redirect after social login/signup
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
+# Google OAuth2 provider configuration
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "APP": {
+            "client_id": config("GOOGLE_OAUTH2_KEY"),
+            "secret": config("GOOGLE_OAUTH2_SECRET"),
+            "key": "",
+        },
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    }
+>>>>>>> 722cdf944b0b177eb1289446202e60ba4f77928e
 }
