@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{% block title %}ContractorBoard{% endblock %}</title>
+    <title>{% block title %}Jobboard{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/custom-bs.css' %}">
     <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
@@ -13,55 +13,118 @@
     <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        @media (max-width: 768px) {
+            .site-navbar .container-fluid {
+                padding: 10px 15px;
+            }
+            .mobile-nav {
+                display: none;
+                width: 100%;
+                background: #fff;
+                padding: 15px;
+                border-top: 1px solid #eee;
+            }
+            .mobile-nav.open {
+                display: block;
+            }
+            .mobile-nav a {
+                display: block;
+                padding: 10px 0;
+                font-size: 16px;
+                border-bottom: 1px solid #f0f0f0;
+                color: #333;
+            }
+            .mobile-nav a:last-child {
+                border-bottom: none;
+            }
+            .hamburger {
+                display: block;
+                cursor: pointer;
+                font-size: 24px;
+                background: none;
+                border: none;
+                color: #333;
+            }
+            .desktop-nav {
+                display: none !important;
+            }
+            .desktop-auth {
+                display: none !important;
+            }
+        }
+        @media (min-width: 769px) {
+            .hamburger {
+                display: none !important;
+            }
+            .mobile-nav {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 <body id="top">
 
 <div class="site-wrap">
 
-  <div class="site-mobile-menu site-navbar-target">
-    <div class="site-mobile-menu-header">
-      <div class="site-mobile-menu-close mt-3">
-        <span class="icon-close2 js-menu-toggle"></span>
-      </div>
-    </div>
-    <div class="site-mobile-menu-body"></div>
-  </div>
-
+  <!-- NAVBAR -->
   <header class="site-navbar mt-3">
     <div class="container-fluid">
       <div class="row align-items-center">
 
-        <div class="site-logo col-6">
-          <a href="/">ContractorBoard</a>
+        <!-- Logo -->
+        <div class="col-6 col-lg-2">
+          <a href="/" class="site-logo">Jobboard</a>
         </div>
 
-        <nav class="mx-auto site-navigation">
-          <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+        <!-- Desktop Nav Links -->
+        <nav class="col-lg-6 desktop-nav">
+          <ul class="site-menu js-clone-nav d-none d-lg-block ml-0 pl-0">
             <li><a href="/" class="nav-link">Home</a></li>
             <li><a href="/jobs/" class="nav-link">Browse Jobs</a></li>
             <li><a href="/contractors/" class="nav-link">Contractors</a></li>
+            <li><a href="/faq/" class="nav-link">FAQ</a></li>
           </ul>
         </nav>
 
-        <div class="right-cta-menu text-right d-flex align-items-center col-6">
-          <div class="ml-auto">
-            {% if user.is_authenticated %}
-              <a href="/dashboard/" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block">Dashboard</a>
-              <a href="{% url 'logout' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Logout</a>
-            {% else %}
-              <a href="{% url 'login' %}" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block">Log In</a>
-              <a href="{% url 'register_homeowner' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Register</a>
-            {% endif %}
-          </div>
-          <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3">
-            <span class="icon-menu h3 m-0 p-0 mt-2"></span>
-          </a>
+        <!-- Desktop Auth Buttons -->
+        <div class="col-lg-4 text-right desktop-auth">
+          {% if user.is_authenticated %}
+            <a href="/dashboard/" class="btn btn-outline-primary mr-2">Dashboard</a>
+            <a href="{% url 'account_logout' %}" class="btn btn-primary">Logout</a>
+          {% else %}
+            <a href="{% url 'account_login' %}" class="btn btn-outline-primary mr-2">Login</a>
+            <a href="{% url 'account_signup' %}" class="btn btn-primary">Register</a>
+          {% endif %}
+        </div>
+
+        <!-- Mobile Hamburger -->
+        <div class="col-6 text-right d-lg-none">
+          <button class="hamburger" id="hamburgerBtn">&#9776;</button>
         </div>
 
       </div>
+
+      <!-- Mobile Nav Menu -->
+      <div class="mobile-nav" id="mobileNav">
+        <a href="/">Home</a>
+        <a href="/jobs/">Browse Jobs</a>
+        <a href="/contractors/">Contractors</a>
+        <a href="/faq/">FAQ</a>
+        <hr>
+        {% if user.is_authenticated %}
+          <a href="/dashboard/">Dashboard</a>
+          <a href="{% url 'account_logout' %}">Logout</a>
+        {% else %}
+          <a href="{% url 'account_login' %}">Login</a>
+          <a href="{% url 'account_signup' %}">Register</a>
+        {% endif %}
+      </div>
+
     </div>
   </header>
 
+  <!-- Messages -->
   {% if messages %}
   <div class="container mt-3">
     {% for message in messages %}
@@ -73,28 +136,42 @@
   </div>
   {% endif %}
 
+  <!-- Page Content -->
   {% block content %}{% endblock %}
 
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container">
       <div class="row">
-        <div class="col-md-6">
-          <h3 class="footer-heading mb-4">ContractorBoard</h3>
+        <div class="col-md-6 mb-4">
+          <h3 class="footer-heading mb-4">Jobboard</h3>
           <p>Connecting homeowners with trusted HVAC, Plumbing, Roofing and Electrical contractors.</p>
         </div>
-        <div class="col-md-3 ml-auto">
+        <div class="col-md-3 mb-4">
           <h3 class="footer-heading mb-4">Quick Links</h3>
           <ul class="list-unstyled">
             <li><a href="/jobs/">Browse Jobs</a></li>
             <li><a href="/contractors/">Contractors</a></li>
-            <li><a href="{% url 'login' %}">Login</a></li>
-            <li><a href="/faq/" class="nav-link">FAQ</a></li>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="{% url 'account_login' %}">Login</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3 mb-4">
+          <h3 class="footer-heading mb-4">Account</h3>
+          <ul class="list-unstyled">
+            {% if user.is_authenticated %}
+            <li><a href="/dashboard/">Dashboard</a></li>
+            <li><a href="{% url 'account_logout' %}">Logout</a></li>
+            {% else %}
+            <li><a href="{% url 'account_signup' %}">Register as Homeowner</a></li>
+            <li><a href="{% url 'account_signup' %}">Register as Contractor</a></li>
+            {% endif %}
           </ul>
         </div>
       </div>
-      <div class="row pt-5 mt-5 text-center">
+      <div class="row pt-3 mt-3 text-center border-top">
         <div class="col-md-12">
-          <p>ContractorBoard &copy; 2026 — Built with Django by Kenny | FlyVark AI</p>
+          <p class="mb-0">Jobboard &copy; 2026 — Built with Django by Kenny | FlyVark AI</p>
         </div>
       </div>
     </div>
@@ -113,6 +190,14 @@
 <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
 <script src="{% static 'js/stickyfill.min.js' %}"></script>
 <script src="{% static 'js/custom.js' %}"></script>
+
+<script>
+  // Mobile hamburger toggle
+  document.getElementById('hamburgerBtn').addEventListener('click', function() {
+    var nav = document.getElementById('mobileNav');
+    nav.classList.toggle('open');
+  });
+</script>
 
 </body>
 </html>
