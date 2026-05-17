@@ -106,3 +106,9 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Google OAuth Configuration
+GOOGLE_OAUTH_CONFIG = {
+    "client_id": config("GOOGLE_OAUTH_KEY", default=""),
+    "secret": config("GOOGLE_OAUTH_SECRET", default=""),
+}
