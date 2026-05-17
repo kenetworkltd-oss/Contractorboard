@@ -118,9 +118,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Google OAuth Configuration
 GOOGLE_OAUTH_CONFIG = {
-    "client_id": config("GOOGLE_OAUTH_KEY", default=""),
-    "secret": config("GOOGLE_OAUTH_SECRET", default=""),
+    "client_id": config("GOOGLE_OAUTH2_KEY", default=config("GOOGLE_OAUTH_KEY", default="")),
+    "secret": config("GOOGLE_OAUTH2_SECRET", default=config("GOOGLE_OAUTH_SECRET", default=""))
 }
+
 # django.contrib.sites required by allauth
 SITE_ID = 1
 
