@@ -13,6 +13,10 @@ def home(request):
     return render(request, 'marketplace/home.html')
 
 
+def faq(request):
+    return render(request, 'marketplace/faq.html')
+
+
 def contractor_list(request):
     profiles = ContractorProfile.objects.filter(
         user__is_active=True
@@ -136,7 +140,3 @@ def send_inquiry(request, job_pk):
         'form': form,
         'job': job
     })
-    
-    
- def faq(request):
-    return render(request, 'marketplace/faq.html')
