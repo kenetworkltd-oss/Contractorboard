@@ -143,6 +143,9 @@ ACCOUNT_USERNAME_REQUIRED = False
 # Redirect after social login/signup
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
+# Email confirmation
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
+
 # Google OAuth2 provider configuration
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
