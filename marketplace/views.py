@@ -93,5 +93,46 @@ def dashboard(request):
 def send_inquiry(request, job_pk):
     job = get_object_or_404(Job, pk=job_pk, status='open')
 
-    # Block homeowners from sending inquiries
-    i
+    if not request.user.is_contractor():
+        return redirect('job_detail', pk=job_pk)
+
+    already_sent = Inquiry.objects.filter(
+        job=job,
+        contractor=request.user
+    ).exists()
+    if already_sent:
+        return redirect('job_detail', pk=job_pk)
+
+    if job.homeowner == request.user:
+        return redirect('job_detail', pk=job_pk)
+
+    if request.method == 'POST':
+        form = InquiryForm(request.POST)
+        if form.is_valid():
+            inquiry = form.save(commit=False)
+            inquiry.job = job
+            inquiry.contractor = request.user
+            inquiry.save()
+            try:
+                send_mail(
+                    subject=f'New Inquiry on: {job.title}',
+                    message=(
+                        f'Hi {job.homeowner.username},\n\n'
+                        f'{request.user.username} sent an inquiry on "{job.title}".\n\n'
+                        f'Message:\n{inquiry.message}\n\n'
+                        f'Login to view and respond.'
+                    ),
+                    from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=[job.homeowner.email],
+                    fail_silently=True,
+                )
+            except Exception:
+                pass
+            return redirect('job_detail', pk=job_pk)
+    else:
+        form = InquiryForm()
+
+    return render(request, 'marketplace/inquiry_form.html', {
+        'form': form,
+        'job': job
+    })

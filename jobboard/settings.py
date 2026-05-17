@@ -147,14 +147,13 @@ SOCIALACCOUNT_LOGIN_ON_GET = True
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "APP": {
-            "client_id": config("GOOGLE_OAUTH2_KEY"),
-            "secret": config("GOOGLE_OAUTH2_SECRET"),
-            "key": "",
+            "client_id": config("GOOGLE_OAUTH2_KEY", default=""),
+            "secret": config("GOOGLE_OAUTH2_SECRET", default="")
         },
         "SCOPE": [
             "profile",
             "email",
-        ],
+        ],  
         "AUTH_PARAMS": {
             "access_type": "online",
         },
