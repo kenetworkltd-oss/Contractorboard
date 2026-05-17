@@ -108,6 +108,7 @@ LOGIN_URL = '/accounts/login/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
+
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
@@ -115,12 +116,11 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-<<<<<<< HEAD
 # Google OAuth Configuration
 GOOGLE_OAUTH_CONFIG = {
     "client_id": config("GOOGLE_OAUTH_KEY", default=""),
     "secret": config("GOOGLE_OAUTH_SECRET", default=""),
-=======
+}
 # django.contrib.sites required by allauth
 SITE_ID = 1
 
@@ -158,5 +158,4 @@ SOCIALACCOUNT_PROVIDERS = {
             "access_type": "online",
         },
     }
->>>>>>> 722cdf944b0b177eb1289446202e60ba4f77928e
 }
