@@ -13,160 +13,82 @@
     <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <style>
-        /* Navbar fix */
-        .site-navbar {
-            position: relative;
-            z-index: 999;
-        }
-        .top-navbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 20px;
-            flex-wrap: nowrap;
-        }
-        .nav-logo {
-            font-size: 20px;
-            font-weight: 700;
-            color: #333;
-            text-decoration: none;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-        .nav-logo:hover { color: #333; text-decoration: none; }
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            flex: 1;
-            justify-content: center;
-        }
-        .nav-links li a {
-            color: #333;
-            text-decoration: none;
-            font-size: 14px;
-            white-space: nowrap;
-        }
-        .nav-links li a:hover { color: #007bff; }
-        .nav-auth {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
-        }
-        .hamburger-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #333;
-            padding: 0;
-            flex-shrink: 0;
-        }
-
-        /* Mobile */
-        .mobile-menu {
-            display: none;
-            background: #fff;
-            border-top: 1px solid #eee;
-            padding: 10px 20px;
-        }
-        .mobile-menu.open { display: block; }
-        .mobile-menu a,
-        .mobile-menu button {
-            display: block;
-            width: 100%;
-            padding: 12px 0;
-            font-size: 15px;
-            border: none;
-            border-bottom: 1px solid #f0f0f0;
-            background: none;
-            color: #333;
-            text-align: left;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        .mobile-menu a:last-child,
-        .mobile-menu button:last-child {
-            border-bottom: none;
-        }
-        .mobile-menu hr { margin: 5px 0; }
-
-        @media (max-width: 991px) {
-            .nav-links { display: none !important; }
-            .nav-auth { display: none !important; }
-            .hamburger-btn { display: block !important; }
-        }
-        @media (min-width: 992px) {
-            .hamburger-btn { display: none !important; }
-            .mobile-menu { display: none !important; }
-        }
-    </style>
 </head>
 <body id="top">
 
 <div class="site-wrap">
 
-  <header class="site-navbar">
-    <div class="top-navbar">
-
-      <!-- Logo -->
-      <a href="/" class="nav-logo">Jobboard</a>
-
-      <!-- Desktop Nav Links -->
-      <ul class="nav-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/jobs/">Browse Jobs</a></li>
-        <li><a href="/contractors/">Contractors</a></li>
-        <li><a href="/faq/">FAQ</a></li>
-      </ul>
-
-      <!-- Desktop Auth -->
-      <div class="nav-auth">
-        {% if user.is_authenticated %}
-          <a href="/dashboard/" class="btn btn-outline-primary btn-sm">Dashboard</a>
-          <form method="POST" action="{% url 'account_logout' %}" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary btn-sm">Logout</button>
-          </form>
-        {% else %}
-          <a href="{% url 'account_login' %}" class="btn btn-outline-primary btn-sm">Login</a>
-          <a href="{% url 'account_signup' %}" class="btn btn-primary btn-sm">Register</a>
-        {% endif %}
+  <!-- Mobile Menu — original jobboard structure -->
+  <div class="site-mobile-menu site-navbar-target">
+    <div class="site-mobile-menu-header">
+      <div class="site-mobile-menu-close mt-3">
+        <span class="icon-close2 js-menu-toggle"></span>
       </div>
-
-      <!-- Mobile Hamburger -->
-      <button class="hamburger-btn" id="hamburgerBtn">&#9776;</button>
-
     </div>
+    <div class="site-mobile-menu-body"></div>
+  </div>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="/">Home</a>
-      <a href="/jobs/">Browse Jobs</a>
-      <a href="/contractors/">Contractors</a>
-      <a href="/faq/">FAQ</a>
-      <hr>
-      {% if user.is_authenticated %}
-        <a href="/dashboard/">Dashboard</a>
-        <form method="POST" action="{% url 'account_logout' %}">
-          {% csrf_token %}
-          <button type="submit">Logout</button>
-        </form>
-      {% else %}
-        <a href="{% url 'account_login' %}">Login</a>
-        <a href="/accounts/register/homeowner/">Register as Homeowner</a>
-        <a href="/accounts/register/contractor/">Register as Contractor</a>
-      {% endif %}
+  <!-- NAVBAR — exact original jobboard structure -->
+  <header class="site-navbar mt-3">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+
+        <!-- Logo -->
+        <div class="site-logo col-6">
+          <a href="/">Jobboard</a>
+        </div>
+
+        <!-- Desktop Nav -->
+        <nav class="mx-auto site-navigation">
+          <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/jobs/" class="nav-link">Browse Jobs</a></li>
+            <li><a href="/contractors/" class="nav-link">Contractors</a></li>
+            <li><a href="/faq/" class="nav-link">FAQ</a></li>
+            <!-- Mobile only links cloned into mobile menu by JS -->
+            {% if user.is_authenticated %}
+            <li class="d-lg-none"><a href="/dashboard/">Dashboard</a></li>
+            <li class="d-lg-none">
+              <form method="POST" action="{% url 'account_logout' %}">
+                {% csrf_token %}
+                <button type="submit" style="background:none;border:none;padding:0;color:inherit;cursor:pointer;font-size:15px;">Logout</button>
+              </form>
+            </li>
+            {% else %}
+            <li class="d-lg-none"><a href="{% url 'account_login' %}">Log In</a></li>
+            <li class="d-lg-none"><a href="/accounts/register/homeowner/">Register as Homeowner</a></li>
+            <li class="d-lg-none"><a href="/accounts/register/contractor/">Register as Contractor</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+
+        <!-- Right CTA — original jobboard structure -->
+        <div class="right-cta-menu text-right d-flex align-items-center col-6">
+          <div class="ml-auto">
+            {% if user.is_authenticated %}
+              <a href="/dashboard/" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block">Dashboard</a>
+              <form method="POST" action="{% url 'account_logout' %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary border-width-2 d-none d-lg-inline-block">Logout</button>
+              </form>
+            {% else %}
+              <a href="/accounts/register/homeowner/" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block">Register</a>
+              <a href="{% url 'account_login' %}" class="btn btn-primary border-width-2 d-none d-lg-inline-block">
+                <span class="mr-2 icon-lock_outline"></span>Log In
+              </a>
+            {% endif %}
+          </div>
+          <!-- Mobile hamburger — original jobboard toggle -->
+          <a href="#" class="site-menu-toggle js-menu-toggle d-inline-block d-xl-none mt-lg-2 ml-3">
+            <span class="icon-menu h3 m-0 p-0 mt-2"></span>
+          </a>
+        </div>
+
+      </div>
     </div>
-
   </header>
 
+  <!-- Messages -->
   {% if messages %}
   <div class="container mt-3">
     {% for message in messages %}
@@ -178,8 +100,10 @@
   </div>
   {% endif %}
 
+  <!-- Page Content -->
   {% block content %}{% endblock %}
 
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container">
       <div class="row">
@@ -204,7 +128,7 @@
             <li>
               <form method="POST" action="{% url 'account_logout' %}">
                 {% csrf_token %}
-                <button type="submit" style="background:none; border:none; padding:0; color:inherit; cursor:pointer; font-size:14px;">Logout</button>
+                <button type="submit" style="background:none;border:none;padding:0;color:inherit;cursor:pointer;font-size:14px;">Logout</button>
               </form>
             </li>
             {% else %}
@@ -236,12 +160,6 @@
 <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
 <script src="{% static 'js/stickyfill.min.js' %}"></script>
 <script src="{% static 'js/custom.js' %}"></script>
-
-<script>
-  document.getElementById('hamburgerBtn').addEventListener('click', function() {
-    document.getElementById('mobileMenu').classList.toggle('open');
-  });
-</script>
 
 </body>
 </html>
