@@ -14,74 +14,97 @@
     <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
-        /* Navbar alignment fix */
-        .site-navbar .container-fluid {
-            padding: 0 20px;
+        /* Navbar fix */
+        .site-navbar {
+            position: relative;
+            z-index: 999;
         }
-        .site-navbar .navbar-row {
+        .top-navbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            width: 100%;
+            padding: 10px 20px;
             flex-wrap: nowrap;
         }
-        .site-logo {
-            font-size: 22px;
+        .nav-logo {
+            font-size: 20px;
             font-weight: 700;
+            color: #333;
+            text-decoration: none;
             white-space: nowrap;
+            flex-shrink: 0;
         }
-        .desktop-nav ul {
-            list-style: none;
+        .nav-logo:hover { color: #333; text-decoration: none; }
+        .nav-links {
             display: flex;
-            gap: 20px;
+            align-items: center;
+            gap: 25px;
+            list-style: none;
             margin: 0;
             padding: 0;
-            align-items: center;
+            flex: 1;
+            justify-content: center;
         }
-        .desktop-nav ul li a {
-            line-height: 1;
+        .nav-links li a {
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            white-space: nowrap;
         }
-        .desktop-auth {
+        .nav-links li a:hover { color: #007bff; }
+        .nav-auth {
             display: flex;
             align-items: center;
             gap: 8px;
-            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .hamburger-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+            padding: 0;
+            flex-shrink: 0;
         }
 
         /* Mobile */
+        .mobile-menu {
+            display: none;
+            background: #fff;
+            border-top: 1px solid #eee;
+            padding: 10px 20px;
+        }
+        .mobile-menu.open { display: block; }
+        .mobile-menu a,
+        .mobile-menu button {
+            display: block;
+            width: 100%;
+            padding: 12px 0;
+            font-size: 15px;
+            border: none;
+            border-bottom: 1px solid #f0f0f0;
+            background: none;
+            color: #333;
+            text-align: left;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .mobile-menu a:last-child,
+        .mobile-menu button:last-child {
+            border-bottom: none;
+        }
+        .mobile-menu hr { margin: 5px 0; }
+
         @media (max-width: 991px) {
-            .desktop-nav { display: none !important; }
-            .desktop-auth { display: none !important; }
-            .hamburger {
-                display: block !important;
-                background: none;
-                border: none;
-                font-size: 24px;
-                cursor: pointer;
-                color: #333;
-                padding: 0 5px;
-            }
-            .mobile-nav {
-                display: none;
-                width: 100%;
-                background: #fff;
-                padding: 10px 20px;
-                border-top: 1px solid #eee;
-            }
-            .mobile-nav.open { display: block; }
-            .mobile-nav a {
-                display: block;
-                padding: 12px 0;
-                font-size: 15px;
-                border-bottom: 1px solid #f0f0f0;
-                color: #333;
-                text-decoration: none;
-            }
-            .mobile-nav a:last-child { border-bottom: none; }
+            .nav-links { display: none !important; }
+            .nav-auth { display: none !important; }
+            .hamburger-btn { display: block !important; }
         }
         @media (min-width: 992px) {
-            .hamburger { display: none !important; }
-            .mobile-nav { display: none !important; }
+            .hamburger-btn { display: none !important; }
+            .mobile-menu { display: none !important; }
         }
     </style>
 </head>
@@ -89,59 +112,59 @@
 
 <div class="site-wrap">
 
-  <header class="site-navbar mt-3">
-    <div class="container-fluid">
+  <header class="site-navbar">
+    <div class="top-navbar">
 
-      <!-- Main navbar row -->
-      <div class="navbar-row">
+      <!-- Logo -->
+      <a href="/" class="nav-logo">Jobboard</a>
 
-        <!-- Logo -->
-        <a href="/" class="site-logo">Jobboard</a>
+      <!-- Desktop Nav Links -->
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/jobs/">Browse Jobs</a></li>
+        <li><a href="/contractors/">Contractors</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+      </ul>
 
-        <!-- Desktop Nav -->
-        <nav class="desktop-nav mx-4">
-          <ul>
-            <li><a href="/" class="nav-link">Home</a></li>
-            <li><a href="/jobs/" class="nav-link">Browse Jobs</a></li>
-            <li><a href="/contractors/" class="nav-link">Contractors</a></li>
-            <li><a href="/faq/" class="nav-link">FAQ</a></li>
-          </ul>
-        </nav>
-
-        <!-- Desktop Auth -->
-        <div class="desktop-auth">
-          {% if user.is_authenticated %}
-            <a href="/dashboard/" class="btn btn-outline-primary">Dashboard</a>
-            <a href="{% url 'account_logout' %}" class="btn btn-primary">Logout</a>
-          {% else %}
-            <a href="{% url 'account_login' %}" class="btn btn-outline-primary">Login</a>
-            <a href="{% url 'account_signup' %}" class="btn btn-primary">Register</a>
-          {% endif %}
-        </div>
-
-        <!-- Mobile Hamburger -->
-        <button class="hamburger d-lg-none" id="hamburgerBtn">&#9776;</button>
-
-      </div>
-
-      <!-- Mobile Menu -->
-      <div class="mobile-nav" id="mobileNav">
-        <a href="/">Home</a>
-        <a href="/jobs/">Browse Jobs</a>
-        <a href="/contractors/">Contractors</a>
-        <a href="/faq/">FAQ</a>
-        <hr>
+      <!-- Desktop Auth -->
+      <div class="nav-auth">
         {% if user.is_authenticated %}
-          <a href="/dashboard/">Dashboard</a>
-          <a href="{% url 'account_logout' %}">Logout</a>
+          <a href="/dashboard/" class="btn btn-outline-primary btn-sm">Dashboard</a>
+          <form method="POST" action="{% url 'account_logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary btn-sm">Logout</button>
+          </form>
         {% else %}
-          <a href="{% url 'account_login' %}">Login</a>
-          <a href="/accounts/register/homeowner/">Register as Homeowner</a>
-          <a href="/accounts/register/contractor/">Register as Contractor</a>
+          <a href="{% url 'account_login' %}" class="btn btn-outline-primary btn-sm">Login</a>
+          <a href="{% url 'account_signup' %}" class="btn btn-primary btn-sm">Register</a>
         {% endif %}
       </div>
 
+      <!-- Mobile Hamburger -->
+      <button class="hamburger-btn" id="hamburgerBtn">&#9776;</button>
+
     </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="/">Home</a>
+      <a href="/jobs/">Browse Jobs</a>
+      <a href="/contractors/">Contractors</a>
+      <a href="/faq/">FAQ</a>
+      <hr>
+      {% if user.is_authenticated %}
+        <a href="/dashboard/">Dashboard</a>
+        <form method="POST" action="{% url 'account_logout' %}">
+          {% csrf_token %}
+          <button type="submit">Logout</button>
+        </form>
+      {% else %}
+        <a href="{% url 'account_login' %}">Login</a>
+        <a href="/accounts/register/homeowner/">Register as Homeowner</a>
+        <a href="/accounts/register/contractor/">Register as Contractor</a>
+      {% endif %}
+    </div>
+
   </header>
 
   {% if messages %}
@@ -178,7 +201,12 @@
           <ul class="list-unstyled">
             {% if user.is_authenticated %}
             <li><a href="/dashboard/">Dashboard</a></li>
-            <li><a href="{% url 'account_logout' %}">Logout</a></li>
+            <li>
+              <form method="POST" action="{% url 'account_logout' %}">
+                {% csrf_token %}
+                <button type="submit" style="background:none; border:none; padding:0; color:inherit; cursor:pointer; font-size:14px;">Logout</button>
+              </form>
+            </li>
             {% else %}
             <li><a href="/accounts/register/homeowner/">Register as Homeowner</a></li>
             <li><a href="/accounts/register/contractor/">Register as Contractor</a></li>
@@ -211,7 +239,7 @@
 
 <script>
   document.getElementById('hamburgerBtn').addEventListener('click', function() {
-    document.getElementById('mobileNav').classList.toggle('open');
+    document.getElementById('mobileMenu').classList.toggle('open');
   });
 </script>
 

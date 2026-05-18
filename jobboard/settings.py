@@ -139,12 +139,24 @@ ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
-
 # Redirect after social login/signup
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
 # Email confirmation
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
+
+
+# Force HTTPS on Railway
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER', default='')
 
 # Google OAuth2 provider configuration
 SOCIALACCOUNT_PROVIDERS = {
