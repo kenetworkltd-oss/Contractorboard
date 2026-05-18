@@ -140,3 +140,10 @@ def send_inquiry(request, job_pk):
         'form': form,
         'job': job
     })
+    
+@login_required
+def inquiry_detail(request, pk):
+    inquiry = get_object_or_404(Inquiry, pk=pk)
+    if request.user != inquiry.job.homeowner and request.user != inquiry.contractor:
+        return redirect('dashboard')
+    return render(request, 'marketplace/inquiry_detail.html', {'inquiry': inquiry})

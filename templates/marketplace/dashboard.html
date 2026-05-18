@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Dashboard — ContractorBoard{% endblock %}
+{% block title %}Dashboard — Jobboard{% endblock %}
 
 {% block content %}
 <section class="site-section">
@@ -74,9 +74,10 @@
           <tr>
             <th>Job</th>
             <th>Contractor</th>
-            <th>Message</th>
+            <th>Message Preview</th>
             <th>Status</th>
             <th>Date</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -84,9 +85,13 @@
           <tr>
             <td>{{ inquiry.job.title }}</td>
             <td>{{ inquiry.contractor.username }}</td>
-            <td>{{ inquiry.message|truncatewords:10 }}</td>
+            <td>{{ inquiry.message|truncatewords:8 }}</td>
             <td><span class="badge badge-info">{{ inquiry.status }}</span></td>
             <td>{{ inquiry.sent_at|date:"M d, Y" }}</td>
+            <td>
+              <a href="{% url 'inquiry_detail' inquiry.pk %}"
+                class="btn btn-sm btn-primary">View Full</a>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
@@ -95,7 +100,6 @@
     {% else %}
     <p class="text-muted">No inquiries received yet.</p>
     {% endif %}
-
     {% endif %}
 
     {% if user.is_contractor %}
@@ -119,9 +123,10 @@
           <tr>
             <th>Job</th>
             <th>Location</th>
-            <th>Message</th>
+            <th>Message Preview</th>
             <th>Status</th>
             <th>Date</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -129,9 +134,13 @@
           <tr>
             <td><a href="/jobs/{{ inquiry.job.pk }}/">{{ inquiry.job.title }}</a></td>
             <td>{{ inquiry.job.location }}</td>
-            <td>{{ inquiry.message|truncatewords:10 }}</td>
+            <td>{{ inquiry.message|truncatewords:8 }}</td>
             <td><span class="badge badge-info">{{ inquiry.status }}</span></td>
             <td>{{ inquiry.sent_at|date:"M d, Y" }}</td>
+            <td>
+              <a href="{% url 'inquiry_detail' inquiry.pk %}"
+                class="btn btn-sm btn-primary">View Full</a>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
