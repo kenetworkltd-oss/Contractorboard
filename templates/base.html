@@ -14,37 +14,46 @@
     <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
-        @media (max-width: 768px) {
-            .site-navbar .container-fluid {
-                padding: 10px 15px;
-            }
+        .site-navbar .container-fluid .row {
+            flex-wrap: nowrap;
+            align-items: center;
+        }
+        @media (max-width: 991px) {
             .mobile-nav {
                 display: none;
                 width: 100%;
                 background: #fff;
-                padding: 15px;
+                padding: 15px 20px;
                 border-top: 1px solid #eee;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             }
             .mobile-nav.open {
                 display: block;
             }
             .mobile-nav a {
                 display: block;
-                padding: 10px 0;
-                font-size: 16px;
+                padding: 12px 0;
+                font-size: 15px;
                 border-bottom: 1px solid #f0f0f0;
                 color: #333;
+                text-decoration: none;
             }
             .mobile-nav a:last-child {
                 border-bottom: none;
             }
+            .mobile-nav hr {
+                margin: 8px 0;
+            }
             .hamburger {
-                display: block;
+                display: block !important;
                 cursor: pointer;
-                font-size: 24px;
+                font-size: 26px;
                 background: none;
                 border: none;
                 color: #333;
+                padding: 0;
+                line-height: 1;
+                margin-left: auto;
             }
             .desktop-nav {
                 display: none !important;
@@ -53,7 +62,7 @@
                 display: none !important;
             }
         }
-        @media (min-width: 769px) {
+        @media (min-width: 992px) {
             .hamburger {
                 display: none !important;
             }
@@ -67,19 +76,18 @@
 
 <div class="site-wrap">
 
-  <!-- NAVBAR -->
   <header class="site-navbar mt-3">
     <div class="container-fluid">
-      <div class="row align-items-center">
+      <div class="row align-items-center" style="flex-wrap: nowrap;">
 
         <!-- Logo -->
-        <div class="col-6 col-lg-2">
+        <div class="col-auto">
           <a href="/" class="site-logo">Jobboard</a>
         </div>
 
         <!-- Desktop Nav Links -->
-        <nav class="col-lg-6 desktop-nav">
-          <ul class="site-menu js-clone-nav d-none d-lg-block ml-0 pl-0">
+        <nav class="desktop-nav mx-auto">
+          <ul class="site-menu js-clone-nav ml-0 pl-0 mb-0" style="list-style:none; display:flex; gap:20px;">
             <li><a href="/" class="nav-link">Home</a></li>
             <li><a href="/jobs/" class="nav-link">Browse Jobs</a></li>
             <li><a href="/contractors/" class="nav-link">Contractors</a></li>
@@ -88,7 +96,7 @@
         </nav>
 
         <!-- Desktop Auth Buttons -->
-        <div class="col-lg-4 text-right desktop-auth">
+        <div class="desktop-auth ml-auto">
           {% if user.is_authenticated %}
             <a href="/dashboard/" class="btn btn-outline-primary mr-2">Dashboard</a>
             <a href="{% url 'account_logout' %}" class="btn btn-primary">Logout</a>
@@ -98,8 +106,8 @@
           {% endif %}
         </div>
 
-        <!-- Mobile Hamburger -->
-        <div class="col-6 text-right d-lg-none">
+        <!-- Mobile Hamburger — always pushed to right -->
+        <div class="ml-auto d-lg-none" style="display:flex !important; justify-content:flex-end;">
           <button class="hamburger" id="hamburgerBtn">&#9776;</button>
         </div>
 
@@ -117,14 +125,14 @@
           <a href="{% url 'account_logout' %}">Logout</a>
         {% else %}
           <a href="{% url 'account_login' %}">Login</a>
-          <a href="{% url 'account_signup' %}">Register</a>
+          <a href="/accounts/register/homeowner/">Register as Homeowner</a>
+          <a href="/accounts/register/contractor/">Register as Contractor</a>
         {% endif %}
       </div>
 
     </div>
   </header>
 
-  <!-- Messages -->
   {% if messages %}
   <div class="container mt-3">
     {% for message in messages %}
@@ -136,10 +144,8 @@
   </div>
   {% endif %}
 
-  <!-- Page Content -->
   {% block content %}{% endblock %}
 
-  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container">
       <div class="row">
@@ -163,8 +169,9 @@
             <li><a href="/dashboard/">Dashboard</a></li>
             <li><a href="{% url 'account_logout' %}">Logout</a></li>
             {% else %}
-            <li><a href="{% url 'account_signup' %}">Register as Homeowner</a></li>
-            <li><a href="{% url 'account_signup' %}">Register as Contractor</a></li>
+            <li><a href="/accounts/register/homeowner/">Register as Homeowner</a></li>
+            <li><a href="/accounts/register/contractor/">Register as Contractor</a></li>
+            <li><a href="{% url 'account_login' %}">Login</a></li>
             {% endif %}
           </ul>
         </div>
@@ -192,7 +199,6 @@
 <script src="{% static 'js/custom.js' %}"></script>
 
 <script>
-  // Mobile hamburger toggle
   document.getElementById('hamburgerBtn').addEventListener('click', function() {
     var nav = document.getElementById('mobileNav');
     nav.classList.toggle('open');
